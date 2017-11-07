@@ -1,0 +1,247 @@
+---
+title: "Curso introdução ao R - Atividades"
+author: "Sollano R. Braga"
+date: "5 de dezembro de 2016"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_notebook:
+    highlight: tango
+    theme: readable
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+---
+
+## Atividade 1
+
+1. Qual a diferença entre vetores e matrizes?
+
+```{r}
+# Vetores possuem apenas uma dimensão, matrizes possuem duas (linha e coluna).
+```
+
+2. Qual a diferença entre matrizes e dataframes?
+
+```{r}
+# Matrizes só podem ter uma classe de dado. Dataframes podem ter colunas com diferentes classes.
+```
+
+
+3. Crie um vetor com numeros de 1:10 e salve-o com o nome x. Visualise x
+no console.
+
+```{r}
+x <- c(1:10)
+x
+```
+
+4. Crie um dataframe chamado d, composto por 3 vetores de tamanho 6, sendo um de classe numérica, um de classe character, e um de classe lógica.
+Visualize-o no console.
+
+```{r}
+
+w <- rnorm(6)
+w
+
+x <- c("a", "b", "c", "d", "e", "f")
+x
+
+y <- c(T, F, T, F, T, F )
+y
+
+d <- data.frame(w, x, y)
+# ou
+
+d <- data.frame(w = rnorm(6),
+                x = c("a", "b", "c", "d", "e", "f") ,
+                y = c(T, F, T, F, T, F ) )
+d
+
+```
+
+5. Renomeie as variáveis do dataframe criado anteriormente para Numeros, Palavras e Teste.
+
+```{r}
+names(d) <- c("Numeros", "Palavras", "Teste")
+names(d)
+```
+
+
+
+6. Abra o arquivo dados.xlsx no excel, salve-o como dados.csv, e importe-o no R.
+```{r}
+# Arquivo - Salvar como - csv - Comma Separeted Values
+
+dados <- read.csv2("dados.csv")
+
+```
+
+
+
+7. Utilizando o dataframe iris, calcule a média do comprimento das sépalas (Sepal.Length):
+
+```{r}
+
+mean(iris$Sepal.Length)
+
+```
+
+## Atividade 2
+
+Nesta atividade será utilizado o dataset women, que contém informações
+de altura e peso de mulheres, em polegadas e libraas, respectivamente. Este dado já vem built-in no R, então não é necessário carregá-lo.
+
+
+1. Crie uma cópia do dataset women, chamada women_mod.
+
+
+```{r}
+women_mod <- women
+
+women_mod
+
+```
+
+
+2. Sabendo que uma polegada equivale a 0.0254 metros, crie uma nova variável no dataframe women_mod chamada altura_metros, que converte a variável height para metros, e arredonde-a para uma casa decimal.
+
+
+```{r}
+
+women_mod$altura_metros <- women_mod$height * 0.0254
+women_mod$altura_metros <- round(women_mod$altura_metros , 1)
+women_mod
+
+```
+
+
+3. Sabendo que uma libra equivale a 0.453592 kilos, crie uma nova variável no dataframe women_mod chamada peso_kilos, que converte a variável weight para kilos, e arredonde-a para
+uma casa decimal.
+
+
+```{r}
+
+women_mod$peso_kilos <- women_mod$weight * 0.453592
+women_mod$peso_kilos <- round(women_mod$peso_kilos, 1)
+women_mod
+
+```
+
+
+4. Delete as variáveis height e weight do dataframe women_mod.
+
+
+```{r}
+
+women_mod$height <- NULL
+women_mod$weight <- NULL
+
+# ou
+
+women_mod[c("height", "weight")] <- NULL
+
+women_mod
+
+```
+
+
+5. Crie um novo objeto chamado altura_maior_que_1.60, que contém os dados de mulheres que tem altura maior que 1.60 metros.
+
+
+```{r}
+
+altura_maior_que_1.60 <- women_mod[women_mod$altura_metros > 1.60, ]
+altura_maior_que_1.60
+
+```
+
+
+6. Crie um novo objeto chamado altura_e_peso, que contém os dados de mulheres que tem altura maior do que 1.50 E peso maior ou igual do que 60 kg.
+
+
+```{r}
+
+altura_e_peso <- women_mod[women_mod$altura_metros > 1.50 & women_mod$peso_kilos >= 60, ]
+altura_e_peso
+
+```
+
+
+7. Crie um novo objeto chamado altura_ou_peso, que contém os dados de mulheres que tem altura maior do que 1.50 OU peso menor ou igual do que 60 kg.
+
+
+```{r}
+
+altura_ou_peso <- women_mod[women_mod$altura_metros > 1.60 | women_mod$peso_kilos <= 60, ]
+altura_ou_peso
+
+```
+
+
+8. Crie um novo objeto chamado altura_entre, que contém os dados de mulheres que tem altura entre 1.50 e 1.60, utilizando o operador.
+
+
+```{r}
+
+altura_entre <- women_mod[women_mod$altura_metros %in% seq(1.50, 1.60, by=0.01), ]
+altura_entre
+
+```
+
+## Atividade 3
+
+Será utilizado o dado "dados.csv" nesta atividade:
+
+```{r}
+dados <- read.csv2("dados.csv")
+head(dados)
+```
+
+Calcule o diâmetro a altura do peito.
+
+```{r}
+dados$DAP <- dados$CAP / pi
+
+# ou
+
+dados["DAP"] <- dados$CAP / pi
+
+head(dados)
+
+```
+
+
+Sabendo que o código a seguir estima o volume para as árvores medidas:
+
+```{r}
+
+dados$VOL <- exp(-9.7091 + 1.8828 * log(dados$DAP) + 0.9449* log(dados$ALT1)  )
+
+head(dados)
+
+```
+
+Crie uma função que gere um vetor chamado VOL, que estime o volume, dado as informações de b0, b1, b2, dap e ht.
+
+Estime o volume para o dataframe dados utilizando a função.
+
+```{r}
+
+calcula.vol <- function(dap, ht, b0=-9.7091, b1=1.8828, b2=0.9449){
+  
+  VOL <- exp(b0 + b1*log(dap) + b2*log(ht) )
+ 
+  return(VOL)
+   
+}
+
+dados$VOL <- calcula.vol(dados$DAP, dados$ALT1)
+head(dados)
+
+
+
+
+```
+
