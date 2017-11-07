@@ -900,23 +900,23 @@ dados$DAP_QUAD <- NULL
 head(dados)
 
 ## Agora cria-se um objeto que contém apenas arvores normais ou dominantes:
-dados_nd <- dados[dados$DESCCATEGORIA %in% c("Dominante", "Normal"), ]
+dados_g2 <- dados[dados$DESCCATEGORIA %in% c("Dominante", "Normal"), ]
 
 ## Ou, utilizando a função subset:
-dados_nd <- subset(dados, DESCCATEGORIA %in% c("Dominante", "Normal") )
+dados_g2 <- subset(dados, DESCCATEGORIA %in% c("Dominante", "Normal") )
 
-head(dados_nd)
+head(dados_g2)
 
 ## Detalhe importante: Quando extrai-se algumas observações de um dataframe
 ## seja com subset ou com indexação, variáveis de fatoriais
 ## ainda mantem seus níveis originais, de maneira semelhante ao filtro do excel
-levels(dados_nd$DESCCATEGORIA)
+levels(dados_g2$DESCCATEGORIA)
 
 ## Isso pode ser um problema quando se utiliza a ferramenta grafica do
 ## R base, portanto e necessário remover estes níveis.
 ## Para resolver isso aplica-se a função droplevels nesta variável:
-dados_nd <- droplevels(dados_nd)
-levels(dados_nd$DESCCATEGORIA)
+dados_g2 <- droplevels(dados_g2)
+levels(dados_g2$DESCCATEGORIA)
 
 ## NA, ou Not Avaiable, são valores inválidos, ou vazios no R.
 ## Este tipo de dado pode atrapalhar quando se utiliza fórmulas como média,
@@ -984,66 +984,65 @@ a + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
 
 # Tamanho da fonte personalizado
 a + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
-  theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) +
-  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao")
+  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
+theme(
+  plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
+  axis.title=element_text(size = 12)) 
 
-# Limites do eixo y personalizado
+  # Limites do eixo y personalizado
 a + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
-  coord_cartesian(ylim = c(15,35))  + 
-  theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) +
-  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao")
-
-# linha de tendencia
+  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
+  theme(
+    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
+    axis.title=element_text(size = 12)) +
+  coord_cartesian(ylim = c(15,35)) 
+  
+  # linha de tendencia
 a  + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
-  geom_smooth(method = "lm", color = "red")  +
-  coord_cartesian(ylim = c(15,35))  +
-  theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + 
-  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao")  
-
+  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
+  theme(
+    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
+    axis.title=element_text(size = 12)) +
+  coord_cartesian(ylim = c(15,35)) +
+  geom_smooth(method = "lm", color = "red")  
+    
 # linha de tendencia sem intervalo de confiança
 a  + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
-  geom_smooth(method = "lm", color = "red", se = F)  + 
-  coord_cartesian(ylim = c(15,35))  +
+  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
   theme(
-    plot.title=element_text(size = 16, face="bold", vjust = 0.9),
-    axis.title=element_text(size = 12)) + 
-  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao")
+    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
+    axis.title=element_text(size = 12)) +
+  coord_cartesian(ylim = c(15,35)) +
+  geom_smooth(method = "lm", color = "red", se=FALSE)  
 
 # tema diferente
 a  + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
-  theme_bw() + 
-  geom_smooth(method = "lm", color = "red")  + 
-  coord_cartesian(ylim = c(15,35))  + 
+  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
   theme(
     plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
-    axis.title=element_text(size = 12)) + labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao")
-
+    axis.title=element_text(size = 12)) +
+  coord_cartesian(ylim = c(15,35)) +
+  geom_smooth(method = "lm", color = "red", se=FALSE) +
+  theme_bw() 
+  
 a  + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
-  theme_classic() +
-  geom_smooth(method = "lm", color = "red")  + 
-  coord_cartesian(ylim = c(15,35))  + 
-  theme(
-    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
-    axis.title=element_text(size = 12)) + 
-  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") 
-
+    labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
+    theme(
+      plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
+      axis.title=element_text(size = 12)) +
+    coord_cartesian(ylim = c(15,35)) +
+    geom_smooth(method = "lm", color = "red", se=FALSE) +
+  theme_classic() 
+  
 # Podemos utilizar subsetting com uma variavel categorica
 a + geom_point(size = 4, aes(color=DESCCATEGORIA), show.legend = F) +
-  facet_grid(.~CODTALHAO) + 
-  geom_smooth(method = "lm", color = "red")  + 
-  coord_cartesian(ylim = c(15,35))  + 
-  theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + 
-  labs(x="DAP (cm)",
-       y="Altura (m)",
-       colour = "Categoria", 
-       title = "Grafico de Dispersao") 
-
-a + geom_point(size = 4, aes(color=DESCCATEGORIA), show.legend = F) +
-facet_grid(.~CODTALHAO) + 
-  geom_smooth(method = "lm", color = "red")  + 
-  coord_cartesian(ylim = c(15,35))  + 
-  theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + 
-  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") 
+  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
+  theme(
+    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
+    axis.title=element_text(size = 12)) +
+  coord_cartesian(ylim = c(15,35)) +
+  geom_smooth(method = "lm", color = "red", se=FALSE) +
+  facet_grid(.~CODTALHAO) 
 
 # 15.2) Histogramas ####
 
@@ -1074,33 +1073,87 @@ b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA))
 b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA), show.legend = FALSE)
 
 # TItulo
-b + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA))
+b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") 
 
 # Customizar tamanho da fonte
-b + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA))
+b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") +
+  theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12))  
 
 # Limites personalizados
-b + coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA))
-
+b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") +
+  theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + 
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) 
 
 # Curva de densidade
-b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA))  + geom_density(color = "grey32") + coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") 
-b + geom_histogram(binwidth = 2, fill = "cyan4") + geom_density(color = "grey32") + coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP")
-b + geom_histogram(binwidth = 2, fill = "cyan4") + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + coord_cartesian(xlim = c(10,25), ylim = c(0, .3)) + geom_density(color = "grey32")
+b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") +
+  theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + 
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) 
+  geom_density(color = "grey32")
+
+b + geom_histogram(binwidth = 2, fill = "cyan4") + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") +
+  theme(
+    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
+    axis.title=element_text(size = 12)) +
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) +
+  geom_density(color = "grey32") 
+
+b + geom_histogram(binwidth = 2, fill = "cyan4") + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .3)) + 
+  geom_density(color = "grey32") 
 
 # Tema diferente
-b + geom_histogram(binwidth = 2, fill = "cyan4") + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + coord_cartesian(xlim = c(10,25), ylim = c(0, .3)) + geom_density(color = "grey32") + theme_bw()
-b + geom_histogram(binwidth = 2, fill = "cyan4") + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + coord_cartesian(xlim = c(10,25), ylim = c(0, .3)) + geom_density(color = "grey32") + theme_classic()
+b + geom_histogram(binwidth = 2, fill = "cyan4") + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .3)) + 
+  geom_density(color = "grey32") + 
+  theme_bw()
+
+b + geom_histogram(binwidth = 2, fill = "cyan4") + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .3)) + 
+  geom_density(color = "grey32") + 
+  theme_classic()
 
 # Podemos utilizar subsetting com uma variavel categorica
-b + facet_grid(.~DESCCATEGORIA) + geom_histogram(binwidth = 2, fill = "cyan4") + geom_density(color = "grey32") + coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP")
-b + facet_grid(.~CODTALHAO) + geom_histogram(binwidth = 2, fill = "cyan4") + geom_density(color = "grey32") + coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP")
+b + geom_histogram(binwidth = 2, fill = "cyan4") + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
+  theme(
+    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
+    axis.title=element_text(size = 12)) + 
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) + 
+  geom_density(color = "grey32") + 
+  facet_grid(.~DESCCATEGORIA)
 
-b + facet_grid(.~CODTALHAO) + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + geom_density(color = "grey32") + coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") 
+b + geom_histogram(binwidth = 2, fill = "cyan4") +
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
+  theme(
+    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
+    axis.title=element_text(size = 12)) +
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) + 
+  geom_density(color = "grey32") + 
+  facet_grid(.~CODTALHAO)
 
+b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") +
+  theme(
+    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
+    axis.title=element_text(size = 12)) + 
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) +
+  geom_density(color = "grey32") + 
+  facet_grid(.~CODTALHAO)
+  
 # 15.3) Boxplot ####
 
-c <- ggplot(dados_nd, aes(x = DESCCATEGORIA, y = ALT1))
+dados_g2 <- dados_g %>% filter(DESCCATEGORIA %in% c("Normal", "Dominante"))
+dados_g2
+
+c <- ggplot(dados_g2, aes(x = DESCCATEGORIA, y = ALT1))
 
 # Boxplot basico
 c + geom_boxplot()
@@ -1112,14 +1165,23 @@ c + geom_boxplot(color = "red")
 c + geom_boxplot(fill = "steelblue")
 
 # TItulo
-c + labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + geom_boxplot(fill = "steelblue") 
+c + geom_boxplot(fill = "steelblue") +
+  labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura")
 
 # Customizar tamanho da fonte
-c + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12))+ labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + geom_boxplot(fill = "steelblue") 
-
+c + geom_boxplot(fill = "steelblue") +
+  labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + 
+  theme(
+  plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
+  axis.title=element_text(size = 12))
 
 # Adicionar ponto de media
-c  + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12))+ labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + geom_boxplot(fill = "steelblue") + stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE)
+c + geom_boxplot(fill = "steelblue") +
+  labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + 
+  theme(
+    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
+    axis.title=element_text(size = 12)) +
+  stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE)
 
 # Tema personalizado
 c + theme_bw()  + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12))+ labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + geom_boxplot(fill = "steelblue") + stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE)
@@ -1130,7 +1192,7 @@ c + facet_grid(.~CODTALHAO) + stat_summary(fun.y=mean, geom="point", shape=18, s
 
 # Normalmente, ggplot2 nao plota boxplots sem categoria;
 # Podemos improvisar e criar uma categoria falsa
-ggplot(dados_nd, aes(x = factor(0), y = ALT1)) + stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12))+ labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + geom_boxplot(fill = "steelblue") 
+ggplot(dados_g2, aes(x = factor(0), y = ALT1)) + stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12))+ labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + geom_boxplot(fill = "steelblue") 
 
 # 15.4) Combinar e exportar Graficos ####
 
