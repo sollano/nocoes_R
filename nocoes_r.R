@@ -40,8 +40,8 @@
 ## \pagebreak
 ##
 ## # 0) Links úteis ####
-
-## Link para baixar a versão mais atualizada do R:
+##
+## Link para baixar a versão mais atualizada do R (Mantenha o R sempre atualizado):
 ##
 ## http://cran.fiocruz.br/bin/windows/base/
 ##
@@ -1211,7 +1211,7 @@ d + geom_line()
 d + geom_line(aes(linetype=Tree), size=1) +
   labs(x = "Idade", y = "Circunferência", linetype="Árvore" )
 
-## ## 10.4) Exportar Graficos ####
+## ## 10.5) Exportar Graficos ####
 
 ## Podemos combinar graficos feitos com o pacote ggplot2 pelo comando grid.arrange
 ## Para isso salvamos os graficos desejados em variaveis
