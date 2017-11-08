@@ -1,13 +1,13 @@
 
 ## ---
 
-## title: Curso Introdutório ao Ambiente R
+## title: Mini-curso Noções básicas do R
 
 ## author: Sollano Rabelo Braga
 
 ## email: sollanorb@gmail.com
 
-## date: Dezembro, 2016
+## date: Novembro, 2017
 
 ## output:
 
@@ -277,14 +277,7 @@ x
 as.integer(TRUE)
 as.integer(FALSE)
 
-## ## 4.3) Complex (Números complexos) ####
-
-## Números complexos não são muito utilizados na nossa área,
-## entretanto, e importante o conhecimento dos mesmos:
-y <- 1 + 2i
-class(y)
-
-## ## 4.4) Logical (lógicos) ####
+## ## 4.3) Logical (lógicos) ####
 
 ## Valores lógicos são utilizados para comparações, 
 ## e são gerados toda vez que se compara objetos no R utilizando operadores
@@ -310,7 +303,7 @@ class(x > y)
 
 4:6 %in% 1:10
 
-## ## 4.5) Character (Caracteres) ####
+## ## 4.4) Character (Caracteres) ####
 
 ## Character representa valores string no R. Palavras, frases, etc.
 ## Mesmo um dado de classe pode se tornar um valor string.
@@ -333,162 +326,7 @@ class(y)
 
 # 3 + x 
 
-## # 5) Tipos de objetos (Modes) ####
-
-## No R, dados podem ser organizados em diferentes tipos, ou modos;
-## as principais serão refenciadas neste tópico.
-##
-
-## ## 5.1) Vectors (vetores) ####
-
-## No R, um vetor é uma sequência de dados de mesma classe;
-## vetores possuem apenas uma dimensão;
-## um vetor pode ser criado com a função c(), que concatena valores:
-
-a <- c(1, 2, 5.3, 6, -2, 4) 
-a # vetor numérico
-
-b <- c("um", "dois", "tres") 
-b # vetor character 
-
-c <- c(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE) 
-c # vetor logical
-
-## Ao se tentar unir strings e números, ou seja, objetos de classes diferentes em um único vetor,
-## os números serão "coagidos" (coerced) para caracteres, pois um vetor so pode ter uma classe:
-
-# atenção aos números entre aspas, indicando que eles na verdade são caracteres:
-c(a, b) 
-
-## ## 5.3) Matrices (Matrizes) ####
-
-## No R, uma matriz é um conjunto de elementos organizados de forma retangular bidimensional;
-## Todas as colunas de uma matriz devem ter o mesmo número de elementos e a mesma classe(numeric,character, etc).
-##
-## Pode-se criar uma matriz com a função matrix():
-
-d <- matrix( 
-  c(2, 4, 3, 1), # dados a serem inseridos 
-  nrow=2,              # número de linhas 
-  ncol=2,              # número de colunas 
-  byrow = TRUE)        # organizar a matriz por linha 
-
-## matriz que vai de 1 a 4, com duas linhas, organizada por coluna:
-e <- matrix(1:4, nrow = 2,byrow = FALSE)
-
-## matriz d no console:
-d 
-
-## Pode-se fazer operações matemáticas com matrizes:
-
-## Multiplicação:
-d * 4 
-
-## Multiplicação de matrizes:
-d %*% e 
-
-## Matriz transposta:
-t(d)
-
-## Matriz Inversa:
-solve(d) 
-
-## elementos de uma matriz podem ser referenciados utilizando [],
-## utilizando df[linha, coluna], por exemplo:
-
-## Primeira linha, segunda coluna:
-d[1,2]
-
-## Todos os objetos da segunda linha:
-d[2, ]
-
-## mais detalhes sobre manipulação de matrizes serão abordados em tópicos futuros.
-##
-
-## ## 5.4) Data Frames ####
-
-## Dataframes (df) são a forma padrão de se inserir dados no R.
-## Um data frame é mais geral do que uma matriz, de forma que 
-## diferentes colunas podem ter diferentes classes.
-##
-## Colunas são chamadas de variáveis (variables) e linhas de observações (observations);
-##
-## Pode-se utilizar vetores para criar um data frame:
-a <- c(1, 2, 3, 4) 
-b <- c("vermelho", "azul", "vermelho", "rosa")  
-c <- c(TRUE,TRUE,TRUE,FALSE) 
-
-meusdados <- data.frame(a,b,c)
-meusdados 
-
-## Observa-se que agora na aba "environment, abaixo de Data, existe o df "meusdados",
-## com 4 observações e 3 variáveis, ou seja, 4 linhas e 3 colunas.
-##
-## Outra forma de verificar isto e com a função dim():
-dim(meusdados) 
-
-## Os nomes das variáveis de um df podem ser alterados:
-names(meusdados) <- c("Idade", "ID", "Teste") 
-
-## Verifica-se os nomes das variáveis:
-names(meusdados)
-
-## Pode-se visualizá-lo como uma tabela, clicando nele na aba environment, ou utilizando View:
-# View(meusdados)
-
-## Elementos de um df podem ser chamados por nome, com $, ou por posição, com []:
-##
-## variável Idade:
-meusdados$Idade 
-
-## terceira coluna do df meusdados:
-meusdados[,3] 
-
-## o R possui dataframes built-in, ou seja, que já vem instalados com o a instalação básica:
-head(mtcars)
-head(iris)
-
-## mais detalhes sobre a manipulação de data frames serãoabordadosem tópicos futuros. 
-##
-
-## ## 5.5) Lists (Listas) ####
-
-## Listas são coleções ordenadas de objetos;
-## Podem unir objetos de diferentes tipos, classes e domensões em um único objeto.
-## São uteis quando se quer unir informações de objetos de domensões diferentes,
-## e na otimização de loops.
-##
-
-## Por exemplo: Um dataframe e um vetor podem ser unidos por uma lista:
-
-meusdados <- data.frame(a = c(1, 2, 3, 4),
-                        b = c("vermelho", "azul", "vermelho", "rosa"),
-                        c = c(TRUE, TRUE, TRUE, FALSE))
-
-d <- matrix( c(2, 4, 3, 1),   nrow=2, byrow = TRUE)    
-
-minhalista <- list(d, meusdados)
-
-minhalista
-
-class(minhalista)
-
-## Elementos de uma lista são identificados utilizando [[]]
-
-## primeiro elemento de uma lista:
-minhalista[[1]] 
-
-## segundo elemento de uma lista:
-minhalista[[2]] 
-
-## observa-se que a classe do objeto não se altera dentro da lista:
-class(minhalista[[1]]) 
-
-## Caso seja utilizado apenas um colchete, a classe do objeto será de uma lista:
-class(minhalista[1]) 
-
-
-## ## 5.6) Factors (Fatores) ####
+## ## 4.5) Factors (Fatores) ####
 
 ## Variaveis nominais ou classificatórias são chamadas de fatores no R.
 ## Elas podem ser utilizadas para separar os dados em classes, ou grupos.
@@ -542,7 +380,163 @@ iris[iris$Species=="setosa" , ]
 ## neste curso para estas operações.
 ##
 
-## ## 5.7) Functions (funções) ####
+
+## # 5) Tipos de objetos (Modes) ####
+
+## No R, dados podem ser organizados em diferentes tipos, ou modos;
+## as principais serão refenciadas neste tópico.
+##
+
+## ## 5.1) Vectors (vetores) ####
+
+## No R, um vetor é uma sequência de dados de mesma classe;
+## vetores possuem apenas uma dimensão;
+## um vetor pode ser criado com a função c(), que concatena valores:
+
+a <- c(1, 2, 5.3, 6, -2, 4) 
+a # vetor numérico
+
+b <- c("um", "dois", "tres") 
+b # vetor character 
+
+c <- c(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE) 
+c # vetor logical
+
+## Ao se tentar unir strings e números, ou seja, objetos de classes diferentes em um único vetor,
+## os números serão "coagidos" (coerced) para caracteres, pois um vetor so pode ter uma classe:
+
+# atenção aos números entre aspas, indicando que eles na verdade são caracteres:
+c(a, b) 
+
+## ## 5.2) Matrices (Matrizes) ####
+
+## No R, uma matriz é um conjunto de elementos organizados de forma retangular bidimensional;
+## Todas as colunas de uma matriz devem ter o mesmo número de elementos e a mesma classe(numeric,character, etc).
+##
+## Pode-se criar uma matriz com a função matrix():
+
+d <- matrix( 
+  c(2, 4, 3, 1), # dados a serem inseridos 
+  nrow=2,              # número de linhas 
+  ncol=2,              # número de colunas 
+  byrow = TRUE)        # organizar a matriz por linha 
+
+## matriz que vai de 1 a 4, com duas linhas, organizada por coluna:
+e <- matrix(1:4, nrow = 2,byrow = FALSE)
+
+## matriz d no console:
+d 
+
+## Pode-se fazer operações matemáticas com matrizes:
+
+## Multiplicação:
+d * 4 
+
+## Multiplicação de matrizes:
+d %*% e 
+
+## Matriz transposta:
+t(d)
+
+## Matriz Inversa:
+solve(d) 
+
+## elementos de uma matriz podem ser referenciados utilizando [],
+## utilizando df[linha, coluna], por exemplo:
+
+## Primeira linha, segunda coluna:
+d[1,2]
+
+## Todos os objetos da segunda linha:
+d[2, ]
+
+## mais detalhes sobre manipulação de matrizes serão abordados em tópicos futuros.
+##
+
+## ## 5.3) Data Frames ####
+
+## Dataframes (df) são a forma padrão de se inserir dados no R.
+## Um data frame é mais geral do que uma matriz, de forma que 
+## diferentes colunas podem ter diferentes classes.
+##
+## Colunas são chamadas de variáveis (variables) e linhas de observações (observations);
+##
+## Pode-se utilizar vetores para criar um data frame:
+a <- c(1, 2, 3, 4) 
+b <- c("vermelho", "azul", "vermelho", "rosa")  
+c <- c(TRUE,TRUE,TRUE,FALSE) 
+
+meusdados <- data.frame(a,b,c)
+meusdados 
+
+## Observa-se que agora na aba "environment, abaixo de Data, existe o df "meusdados",
+## com 4 observações e 3 variáveis, ou seja, 4 linhas e 3 colunas.
+##
+## Outra forma de verificar isto e com a função dim():
+dim(meusdados) 
+
+## Os nomes das variáveis de um df podem ser alterados:
+names(meusdados) <- c("Idade", "ID", "Teste") 
+
+## Verifica-se os nomes das variáveis:
+names(meusdados)
+
+## Pode-se visualizá-lo como uma tabela, clicando nele na aba environment, ou utilizando View:
+# View(meusdados)
+
+## Elementos de um df podem ser chamados por nome, com $, ou por posição, com []:
+##
+## variável Idade:
+meusdados$Idade 
+
+## terceira coluna do df meusdados:
+meusdados[,3] 
+
+## o R possui dataframes built-in, ou seja, que já vem instalados com o a instalação básica:
+head(mtcars)
+head(iris)
+
+## mais detalhes sobre a manipulação de data frames serãoabordadosem tópicos futuros. 
+##
+
+## ## 5.4) Lists (Listas) ####
+
+## Listas são coleções ordenadas de objetos;
+## Podem unir objetos de diferentes tipos, classes e domensões em um único objeto.
+## São uteis quando se quer unir informações de objetos de domensões diferentes,
+## e na otimização de loops.
+##
+
+## Por exemplo: Um dataframe e um vetor podem ser unidos por uma lista:
+
+meusdados <- data.frame(a = c(1, 2, 3, 4),
+                        b = c("vermelho", "azul", "vermelho", "rosa"),
+                        c = c(TRUE, TRUE, TRUE, FALSE))
+
+d <- matrix( c(2, 4, 3, 1),   nrow=2, byrow = TRUE)    
+
+minhalista <- list(d, meusdados)
+
+minhalista
+
+class(minhalista)
+
+## Elementos de uma lista são identificados utilizando [[]]
+
+## primeiro elemento de uma lista:
+minhalista[[1]] 
+
+## segundo elemento de uma lista:
+minhalista[[2]] 
+
+## observa-se que a classe do objeto não se altera dentro da lista:
+class(minhalista[[1]]) 
+
+## Caso seja utilizado apenas um colchete, a classe do objeto será de uma lista:
+class(minhalista[1]) 
+
+
+## ## 5.5) Functions (funções) ####
 
 ## funções são formas de se compactar rotinas ou operações complexas,
 ## que se deseja fazer repetidas vezes, em apenas um comando, facilitando
@@ -601,7 +595,7 @@ args(summary)
 ## média, quartis, mediana, mínimo e máximo de cada variável:
 summary(mtcars)
 
-## # 7) Pacotes ####
+## # 6) Pacotes ####
 
 ## Pacotes são a unidade fundamental de código reproduzível no R.
 ## Eles incluem funções do R reutilizáveis, a documentação que explica como utilizá-la,
@@ -663,17 +657,18 @@ require(dplyr)
 ##
 ## 7. vegan - Pacote utilizado para análises descritivas de ecologia;
 ##
-
-
-## # 6) Importar e exportar dados no R ####
+## A única desvantagem em se utilizar pacotes, é que 
+## pode acontecer do pacote ser atualizado e uma função mudar de nome, ou deixar de existir,
+## deixando códigos antigos inutilizados. [Códigos escritos utilizando as funções padrões do R,
+## também conhecidas como r base são mais recomendados.
+##
+## # 7) Importar dados no R ####
 
 ## Pode-se importar  e exportar dados no R base (sem a utilização de pacotes)
 ## pelos formatos .csv e .txt;
 ## os dois formatos são semelhantes em questão de tamanho e velocidade,
 ## fica a critério do usuário qual tipo de arquivo utilizar.
 ##
-## ## 6.1) Importar ####
-
 ## utiliza-se read.csv2 para arquivos com separador ";" e dec "," (padrão nacional/europeu);
 ## e read.csv para arquivos com separador "," e dec "." (padrão americano).
 ##
@@ -714,30 +709,14 @@ dados <- read.table("dados.txt", header = T, dec = ",", sep = "\t")
 ## familiaridade com o programa, e para que os scripts criados futuramente
 ## tenham a importação dos dados nele, tornando-os mais práticos.
 ##
-
-## ## 6.2) Exportar dados ####
-
-## Para se exportar dados no R, utiliza-se a família de funções write,
-## como write.table, para o formato .txt e write.csv para o formato .csv;
+## Importar dados direto em formato excel
 ##
-## O modelo utilizado e:
-## write.csv2(nome do objeto a exportar, "nome do arquivo.csv").
-##
-## Semelhante a família das funções read, utiliza-se write.csv2
-## para arquivos com separador ";" e dec "," (padrão nacional/europeu);
-## e write.csv para arquivos com separador "," e dec "." (padrão americano).
-##
-## Deve-se atentar a extensão do arquivo no nome:
-write.csv2(dados, "teste.csv") 
-
-## Por padrão os nomes das linhas são inseridas no arquivo. Para que isto não aconteça,
-## utiliza-se row.names = FALSE:
-write.csv2(dados, "teste.csv", row.names = FALSE)
-
-write.table(dados, "teste.txt", dec = ",", row.names = FALSE)
+## Isto pode ser feito utilizando o pacote readxl:
+library(readxl)
+teste <- read_xlsx("dados.xlsx")
+teste
 
 ## # 8) Indexar ou extrair partes de um objeto (subsetting) e lógica ####
-
 ## ## 8.1) Subsetting ####
 
 ## Quando se trata de dataframes, pode-se utilizar $
@@ -832,16 +811,7 @@ dados[dados$DESCCATEGORIA == "Dominante", ]
 ## Aqui seleciona-se apenas as linhas em que DESCCATEGORIA é igual a dominante,
 ## e todas as colunas.
 ##
-## outra forma de se filtrar dados e com a função subset.
-##
-## Aqui mantem-se apenas as linhas em que o CAP é maior que 55:
-subset(dados, CAP > 55)
-
-## e aqui, antem-se apenas as linhas em que o CAP é maior que 55,
-## e apenas a coluna CAP:
-subset(dados, CAP > 55, select = CAP)
-
-## Quando se realiza subsetting, e possível utilizar varias condições,
+## Quando se realiza subsetting, é possível utilizar varias condições,
 ## deixando o filtro mais específico.
 ## O uso dos operadores  & (E) e | (ou) são muito utilizados,
 ## pois especificam mutualidade exclusiva:
@@ -899,32 +869,13 @@ dados$DAP_QUAD <- NULL
 
 head(dados)
 
-## Agora cria-se um objeto que contém apenas arvores normais ou dominantes:
-dados_g2 <- dados[dados$DESCCATEGORIA %in% c("Dominante", "Normal"), ]
-
-## Ou, utilizando a função subset:
-dados_g2 <- subset(dados, DESCCATEGORIA %in% c("Dominante", "Normal") )
-
-head(dados_g2)
-
-## Detalhe importante: Quando extrai-se algumas observações de um dataframe
-## seja com subset ou com indexação, variáveis de fatoriais
-## ainda mantem seus níveis originais, de maneira semelhante ao filtro do excel
-levels(dados_g2$DESCCATEGORIA)
-
-## Isso pode ser um problema quando se utiliza a ferramenta grafica do
-## R base, portanto e necessário remover estes níveis.
-## Para resolver isso aplica-se a função droplevels nesta variável:
-dados_g2 <- droplevels(dados_g2)
-levels(dados_g2$DESCCATEGORIA)
-
 ## NA, ou Not Avaiable, são valores inválidos, ou vazios no R.
 ## Este tipo de dado pode atrapalhar quando se utiliza fórmulas como média,
 ## ou na hora de plotar gráficos. Devido a isso, e interessante se ter
 ## uma cópia dos dados originais, pode se remove os NAs. Isso pode ser feito
 ## com a função na.omit:
-dados_s_na <- na.omit(dados)
-head(dados_s_na)
+dados_g <- na.omit(dados)
+head(dados_g)
 
 
 ## ## 9.2) Converter variáveis ####
@@ -946,50 +897,51 @@ class(dados$CODTALHAO)
 
 
 
-## # 15) Graficos de dispersao, histogramas e boxplot com ggplot2 ####
-
-# ## 15.0) Carregar dados e pacotes ####
+## # 10) Graficos de dispersao, histogramas e boxplot com ggplot2 ####
+## ## 10.0) Carregar dados e pacotes ####
 
 library(tidyverse)
-dados <- read.csv2("dados.csv")
-dados_g <- dados %>%
-  drop_na() %>% 
-  mutate(DAP = CAP/pi) %>%
-  mutate_at(vars(CODTALHAO, CODPARCELA, CODARVORE, DESCCATEGORIA), as.factor)
+dados_g <- read.csv2("dados.csv")
+dados_g <- na.omit(dados_g)
+dados_g$DAP <- dados_g$CAP/pi
+head(dados_g)
 
-as.tibble(dados_g) 
+## ## 10.1) Dispersão ####
 
-# 15.1) Dispersao ####
-# Primeiro cria-se a base do grafico
+## Histograma para a altura em função da idade
+##
+## Primeiro cria-se a base do grafico
 a <- ggplot(dados_g, aes(x = DAP, y = ALT1))
+a
 
-# depois adiciona-se outras camadas
+## depois adiciona-se outras camadas
 a + geom_point()
 
-# tamanho personalizado
+## tamanho personalizado
 a + geom_point( size = 4)
 
-# Cor personalizada
+## Cor personalizada
 a + geom_point(size = 4, color = "blue")
 
-# Transparencia nos pontos
+## Transparencia nos pontos
 a + geom_point(size = 4, color = "blue", alpha = .75)
 
-# pode-se preencher os dados com uma variavel classificatoria
+## pode-se preencher os dados com uma variavel classificatoria
 a + geom_point(size = 4, aes(color=DESCCATEGORIA))
 
-# titulo personalizado 
+## titulo personalizado 
 a + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
   labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao")
 
-# Tamanho da fonte personalizado
+## Tamanho e fonte personalizado
 a + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
   labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
+theme_gray(base_family = "serif") +
 theme(
   plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
   axis.title=element_text(size = 12)) 
 
-  # Limites do eixo y personalizado
+## Limites do eixo y personalizado
 a + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
   labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
   theme(
@@ -997,7 +949,7 @@ a + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
     axis.title=element_text(size = 12)) +
   coord_cartesian(ylim = c(15,35)) 
   
-  # linha de tendencia
+## linha de tendencia
 a  + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
   labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
   theme(
@@ -1006,7 +958,7 @@ a  + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
   coord_cartesian(ylim = c(15,35)) +
   geom_smooth(method = "lm", color = "red")  
     
-# linha de tendencia sem intervalo de confiança
+## linha de tendencia sem intervalo de confiança
 a  + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
   labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
   theme(
@@ -1015,28 +967,30 @@ a  + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
   coord_cartesian(ylim = c(15,35)) +
   geom_smooth(method = "lm", color = "red", se=FALSE)  
 
-# tema diferente
+## tema diferente
 a  + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
   labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
+  theme_classic() +
   theme(
     plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
     axis.title=element_text(size = 12)) +
   coord_cartesian(ylim = c(15,35)) +
-  geom_smooth(method = "lm", color = "red", se=FALSE) +
-  theme_bw() 
-  
+  geom_smooth(method = "lm", color = "red", se=FALSE) 
+
+## Fonte times new roman
 a  + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
     labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
+    theme_bw(base_family = "serif") +
     theme(
       plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
       axis.title=element_text(size = 12)) +
     coord_cartesian(ylim = c(15,35)) +
-    geom_smooth(method = "lm", color = "red", se=FALSE) +
-  theme_classic() 
+    geom_smooth(method = "lm", color = "red", se=FALSE) 
   
-# Podemos utilizar subsetting com uma variavel categorica
+## Pode-se utilizar subsetting com uma variavel categorica
 a + geom_point(size = 4, aes(color=DESCCATEGORIA), show.legend = F) +
   labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
+  theme_bw(base_family = "serif") +
   theme(
     plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
     axis.title=element_text(size = 12)) +
@@ -1044,197 +998,333 @@ a + geom_point(size = 4, aes(color=DESCCATEGORIA), show.legend = F) +
   geom_smooth(method = "lm", color = "red", se=FALSE) +
   facet_grid(.~CODTALHAO) 
 
-# 15.2) Histogramas ####
-
-b <- ggplot(dados_g, aes(x = DAP))
-
-# para se criar um histograma basta alterar o argumento geom_
-b + geom_histogram()
-
-# Densidade ao inves de frequencia
-b <- ggplot(dados_g, aes(x = DAP, y = ..density..))
-b + geom_histogram()
-
-# Largura das colunas
-b + geom_histogram(binwidth = 2)
-
-# cor personalizada
-b + geom_histogram(binwidth = 2, fill = "cyan4", color = "black")
-
-# Preenchimento personalizado
-b + geom_histogram(binwidth = 2, fill = "cyan4")
-
-# Largura das colunas
-b + geom_histogram(binwidth = 2, fill = "cyan4")
-
-# pode-se preencher os dados com uma variavel classificatoria
-b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA))
-# sem legenda
-b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA), show.legend = FALSE)
-
-# TItulo
-b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
-  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") 
-
-# Customizar tamanho da fonte
-b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
-  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") +
-  theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12))  
-
-# Limites personalizados
-b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
-  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") +
-  theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + 
-  coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) 
-
-# Curva de densidade
-b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
-  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") +
-  theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + 
-  coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) 
-  geom_density(color = "grey32")
-
-b + geom_histogram(binwidth = 2, fill = "cyan4") + 
-  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") +
+## Grafico em escala de cinza para variável discreta
+a + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
+  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
+  theme_bw(base_family = "serif") +
   theme(
     plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
     axis.title=element_text(size = 12)) +
-  coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) +
-  geom_density(color = "grey32") 
+  coord_cartesian(ylim = c(15,35)) +
+  geom_smooth(method = "lm", color = "red", se=FALSE) +
+  facet_grid(.~CODTALHAO) + 
+  scale_colour_grey(start = 0.6, end = 0.2)
 
-b + geom_histogram(binwidth = 2, fill = "cyan4") + 
-  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
-  coord_cartesian(xlim = c(10,25), ylim = c(0, .3)) + 
-  geom_density(color = "grey32") 
-
-# Tema diferente
-b + geom_histogram(binwidth = 2, fill = "cyan4") + 
-  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
-  coord_cartesian(xlim = c(10,25), ylim = c(0, .3)) + 
-  geom_density(color = "grey32") + 
-  theme_bw()
-
-b + geom_histogram(binwidth = 2, fill = "cyan4") + 
-  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
-  coord_cartesian(xlim = c(10,25), ylim = c(0, .3)) + 
-  geom_density(color = "grey32") + 
-  theme_classic()
-
-# Podemos utilizar subsetting com uma variavel categorica
-b + geom_histogram(binwidth = 2, fill = "cyan4") + 
-  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
+## Grafico em escala de cinza para variável contínua
+a + geom_point(size = 4, aes(color=ALT1)) +
+  labs(x="DAP (cm)", y="Altura (m)", colour = "Altura (m)", title = "Grafico de Dispersao") +
+  theme_bw(base_family = "serif") +
   theme(
     plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
-    axis.title=element_text(size = 12)) + 
-  coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) + 
+    axis.title=element_text(size = 12)) +
+  coord_cartesian(ylim = c(15,35)) +
+  geom_smooth(method = "lm", color = "red", se=FALSE) +
+  facet_grid(.~CODTALHAO) + 
+  scale_colour_gradient(low = "light gray",high = "gray20")
+
+## Mais customizações em theme
+a + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
+  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
+  theme_bw(base_family = "serif") +
+  theme(
+    legend.position = "bottom", 
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(), 
+    plot.title = element_text(size = 26, face = "bold", hjust = 0.5),
+    axis.title = element_text(size = 26, face = "bold"), 
+    axis.text = element_text(size = 23), 
+    axis.line.x = element_line(color = "black"), 
+    axis.line.y = element_line(color = "black"), 
+    strip.text.x = element_text(size = 22,face = "bold"), 
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 22, face="bold") ) +
+  coord_cartesian(ylim = c(15,35)) +
+  geom_smooth(method = "lm", color = "red", se=FALSE) +
+  facet_grid(.~CODTALHAO) + 
+  scale_colour_grey(start = 0.6, end = 0.2)
+
+## ## 10.2) Histogramas ####
+
+## Histograma para o DAP
+b <- ggplot(dados_g, aes(x = DAP, y=..density..)) +
+  theme_bw(base_family = "serif") +
+  theme(
+    legend.position = "bottom", 
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(), 
+    plot.title = element_text(size = 26, face = "bold", hjust = 0.5),
+    axis.title = element_text(size = 26, face = "bold"), 
+    axis.text = element_text(size = 23), 
+    axis.line.x = element_line(color = "black"), 
+    axis.line.y = element_line(color = "black"), 
+    strip.text.x = element_text(size = 22,face = "bold"), 
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 22, face="bold") ) + 
+  scale_colour_grey(start = 0.6, end = 0.2) +
+  scale_fill_grey(start = 0.6, end = 0.2)
+
+## para se criar um histograma basta alterar o argumento geom_
+b + geom_histogram()
+
+## frequencia ao inves de densidade
+b + geom_histogram(aes(y=..count..))
+
+## Largura das colunas
+b + geom_histogram(binwidth = 2)
+
+## cor personalizada
+b + geom_histogram(binwidth = 2, fill = "cyan4", color = "black")
+
+## Preenchimento personalizado
+b + geom_histogram(binwidth = 2, fill = "cyan4")
+
+## Largura das colunas
+b + geom_histogram(binwidth = 2, fill = "cyan4")
+
+## pode-se preencher os dados com uma variavel classificatoria
+b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA), color = "black")
+
+## sem legenda
+b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA), color = "black", show.legend = FALSE)
+
+## TItulo
+b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .3)) 
+
+## Curva de densidade
+b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") +
+  geom_density(color = "grey32")
+
+b + geom_histogram(binwidth = 2) + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .3)) + 
+  geom_density(color = "grey32") 
+
+## Podemos utilizar subsetting com uma variavel categorica
+b + geom_histogram(binwidth = 2) + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
   geom_density(color = "grey32") + 
   facet_grid(.~DESCCATEGORIA)
 
-b + geom_histogram(binwidth = 2, fill = "cyan4") +
+b + geom_histogram(binwidth = 2) +
   labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
-  theme(
-    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
-    axis.title=element_text(size = 12)) +
-  coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) + 
   geom_density(color = "grey32") + 
   facet_grid(.~CODTALHAO)
 
 b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
   labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") +
-  theme(
-    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
-    axis.title=element_text(size = 12)) + 
-  coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) +
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .7)) +
   geom_density(color = "grey32") + 
   facet_grid(.~CODTALHAO)
-  
-# 15.3) Boxplot ####
 
-dados_g2 <- dados_g %>% filter(DESCCATEGORIA %in% c("Normal", "Dominante"))
-dados_g2
+b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA)) + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") +
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .7)) +
+  geom_density(color = "grey32") + 
+  facet_grid(.~CODTALHAO)
+## ## 10.3) Boxplot ####
 
-c <- ggplot(dados_g2, aes(x = DESCCATEGORIA, y = ALT1))
+## Boxplot da altura em função da qualidade da árvore
+c <- ggplot(dados_g, aes(x = DESCCATEGORIA, y = ALT1)) +
+  theme_bw(base_family = "serif") +
+  theme(
+    legend.position = "bottom", 
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(), 
+    plot.title = element_text(size = 26, face = "bold", hjust = 0.5),
+    axis.title = element_text(size = 26, face = "bold"), 
+    axis.text = element_text(size = 23), 
+    axis.line.x = element_line(color = "black"), 
+    axis.line.y = element_line(color = "black"), 
+    strip.text.x = element_text(size = 22,face = "bold"), 
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 22, face="bold") ) + 
+  scale_colour_grey(start = 0.6, end = 0.2) +
+  scale_fill_grey(start = 0.6, end = 0.2)
 
-# Boxplot basico
+## Boxplot basico
 c + geom_boxplot()
 
-# cor personalizada
+## cor personalizada
 c + geom_boxplot(color = "red")
 
-# Preenchimento personalizado
+## Preenchimento personalizado
 c + geom_boxplot(fill = "steelblue")
 
-# TItulo
+## TItulo
 c + geom_boxplot(fill = "steelblue") +
   labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura")
 
-# Customizar tamanho da fonte
-c + geom_boxplot(fill = "steelblue") +
+## Adicionar ponto de media
+c + geom_boxplot(fill = "darkgray") +
   labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + 
-  theme(
-  plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
-  axis.title=element_text(size = 12))
-
-# Adicionar ponto de media
-c + geom_boxplot(fill = "steelblue") +
-  labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + 
-  theme(
-    plot.title=element_text(size = 16, face="bold", vjust = 0.9), 
-    axis.title=element_text(size = 12)) +
   stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE)
 
-# Tema personalizado
-c + theme_bw()  + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12))+ labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + geom_boxplot(fill = "steelblue") + stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE)
-c + theme_classic() + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12))+ labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + geom_boxplot(fill = "steelblue")  + stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE)
+## Podemos utilizar subsetting com uma variavel categorica (factor)
+c + geom_boxplot(fill = "darkgray") +
+  labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + 
+  stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE) + 
+  facet_grid(.~CODTALHAO) 
 
-# Podemos utilizar subsetting com uma variavel categorica (factor)
-c + facet_grid(.~CODTALHAO) + stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12))+ labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + geom_boxplot(fill = "steelblue") 
+## Normalmente, ggplot2 nao plota boxplots sem categoria;
+## Podemos improvisar e criar uma categoria falsa
+ggplot(dados_g2, aes(x = factor(0), y = ALT1)) + 
+  geom_boxplot(fill = "darkgray") +
+  labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + 
+  stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE) + 
+  facet_grid(.~CODTALHAO) 
 
-# Normalmente, ggplot2 nao plota boxplots sem categoria;
-# Podemos improvisar e criar uma categoria falsa
-ggplot(dados_g2, aes(x = factor(0), y = ALT1)) + stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12))+ labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + geom_boxplot(fill = "steelblue") 
+## ## 10.4) Linhas ####
 
-# 15.4) Combinar e exportar Graficos ####
+## Dado utilizado: Orange: Crescimento de árvores de laranja.
+head(Orange,10)
 
-# Podemos combinar graficos feitos com o pacote ggplot2 pelo comando grid.arrange
-# Para isso salvamos os graficos desejados em variaveis
+## Gráfico da circunferência em função da idade.
+##
+## Primeiro cira-se a base do gráfico
+d <- ggplot(Orange, aes(x = age, y = circumference)) +
+  theme_bw(base_family = "serif") +
+  theme(
+    legend.position = "bottom", 
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(), 
+    plot.title = element_text(size = 26, face = "bold", hjust = 0.5),
+    axis.title = element_text(size = 26, face = "bold"), 
+    axis.text = element_text(size = 23), 
+    axis.line.x = element_line(color = "black"), 
+    axis.line.y = element_line(color = "black"), 
+    strip.text.x = element_text(size = 22,face = "bold"), 
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 22, face="bold") ) + 
+  scale_colour_grey(start = 0.6, end = 0.2) +
+  scale_fill_grey(start = 0.6, end = 0.2)
 
-disp <- a + geom_smooth(method = "lm", color = "red")  + coord_cartesian(ylim = c(15,35))  + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao")  + geom_point(size = 4, aes(color=DESCCATEGORIA))
-boxp <- c + theme_bw() + stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12))+ labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + geom_boxplot(fill = "steelblue") 
-hist1 <- b + geom_histogram(binwidth = 2, aes(fill = DESCCATEGORIA))  + geom_density(color = "grey32") + coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") 
-hist2 <- b + geom_histogram(binwidth = 2, fill = "cyan4") + geom_density(color = "grey32") + coord_cartesian(xlim = c(10,25), ylim = c(0, .5)) + theme(plot.title=element_text(size = 16, face="bold", vjust = 0.9), axis.title=element_text(size = 12)) + labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP")
+d + geom_line() 
 
-# Agora combinamos com grid.arrange ou arrangeGrob
+# Linhas por árvore
+d + geom_line(aes(linetype=Tree), size=1) +
+  labs(x = "Idade", y = "Circunferência", linetype="Árvore" )
 
-grid.arrange(disp,boxp, hist1, hist2, nrow = 2, ncol = 2)
+## ## 10.4) Exportar Graficos ####
 
-graphsggplot <- arrangeGrob(disp,boxp, hist1, hist2, nrow = 2)
-graphsggplot <- grid.arrange(disp,boxp, hist1, hist2, nrow = 2, ncol = 2)
-graphsggplot
+## Podemos combinar graficos feitos com o pacote ggplot2 pelo comando grid.arrange
+## Para isso salvamos os graficos desejados em variaveis
 
-# Para salvarmos o grafico, basta usar o comando ggsave
-# Por padrao este comando salva o ultimo grafico gerado
-# para salvarmos um arquivo especifico, basta indica-lo na funcao
+disp <- a + geom_point(size = 4, aes(color=DESCCATEGORIA)) +
+  labs(x="DAP (cm)", y="Altura (m)", colour = "Categoria", title = "Grafico de Dispersao") +
+  theme_bw(base_family = "serif") +
+  theme(
+    legend.position = "bottom", 
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(), 
+    plot.title = element_text(size = 26, face = "bold", hjust = 0.5),
+    axis.title = element_text(size = 26, face = "bold"), 
+    axis.text = element_text(size = 23), 
+    axis.line.x = element_line(color = "black"), 
+    axis.line.y = element_line(color = "black"), 
+    strip.text.x = element_text(size = 22,face = "bold"), 
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 22, face="bold") ) +
+  coord_cartesian(ylim = c(15,35)) +
+  geom_smooth(method = "lm", color = "red", se=FALSE) +
+  facet_grid(.~CODTALHAO) + 
+  scale_colour_grey(start = 0.6, end = 0.2)
 
-# Salvar um dos graficos gerados pelo ggplot2
-ggsave( filename = "histogramaggplot.jpeg", plot=hist2)
+boxp <- c + geom_boxplot(fill = "darkgray") +
+  labs(x = "Categoria", y = "Altura (m)", title = "Boxplot para Altura") + 
+  stat_summary(fun.y=mean, geom="point", shape=18, size = 4, show.legend=FALSE)
 
-# Salvar a matriz de graficos
-ggsave(file=  "graficosggplot.jpeg", plot = graphsggplot)
-ggsave("~/Trabalhos_Mensuracao/tutorial_basico_R/graficosggplot.jpeg", graphsggplot)
+hist1 <- b + geom_histogram(binwidth = 2) + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
+  geom_density(color = "grey32") + 
+  facet_grid(.~DESCCATEGORIA)
 
-ggsaveMOD <- ggplot2::ggsave; body(ggsave) <- body(ggplot2::ggsave)[-2]
+hist2 <- b + geom_histogram(binwidth = 2) + 
+  labs(x = "DAP (cm)", y = "Densidade", title = "Histograma do DAP") + 
+  coord_cartesian(xlim = c(10,25), ylim = c(0, .3)) + 
+  geom_density(color = "grey32") 
 
-# Podemos utilizar o metodo padrao anterior:
-png("graficosggplot.png", width = 1920, height = 1080)
-grid.arrange(hist1, hist2, boxp, disp, nrow = 2, ncol = 2)
-dev.off()
+## Para salvarmos o grafico, basta usar o comando ggsave
+## Por padrao este comando salva o ultimo grafico gerado
+## para salvarmos um objeto especifico, basta indica-lo na função:
+##
+## Salvar um dos graficos gerados pelo ggplot2
 
-# Grid customizado 
-grid.arrange(hist2,disp,boxp, layout_matrix = rbind( c(1,2), c(3,3) ) )
+ggsave("disp.jpeg",  disp, width = 12, height = 10)
+ggsave("boxp.jpeg",  boxp, width = 12, height = 10)
+ggsave("hist1.jpeg",  hist1, width = 12, height = 10)
+ggsave("hist2.jpeg",  hist2, width = 12, height = 10)
 
 
-## # 10 Lidando com mensaagens de erro ####
+##
+## # 11) Atividade ####
+## Base de dados utilizada:
+##
+## iris: Composta por comprimento e largura de sépalas e pétalas de 3 espécies de flores.
+##
+
+iris
+
+## 1) 
+##
+## Calcular o comprimento médio das pétalas da espécie virginica
+mean(iris[iris$Species=="virginica", "Petal.Length"], na.rm=T)
+
+## 2) 
+##
+## Criar um Gráfico de dispersão do comprimento da pétala em função do comprimento da sépala,
+## por espécie, com linha de tendência linear
+
+base_grafico <- ggplot(iris, aes(x=Petal.Length, y = Sepal.Length)) +  
+  theme_bw(base_family = "serif") +
+  theme(
+    legend.position = "bottom", 
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(), 
+    plot.title = element_text(size = 26, face = "bold", hjust = 0.5),
+    axis.title = element_text(size = 26, face = "bold"), 
+    axis.text = element_text(size = 23), 
+    axis.line.x = element_line(color = "black"), 
+    axis.line.y = element_line(color = "black"), 
+    strip.text.x = element_text(size = 22,face = "bold"), 
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 22, face="bold") ) 
+
+base_grafico + geom_point()
+
+base_grafico + geom_point() + geom_smooth(method = "lm")
+
+base_grafico + geom_point(aes(color=Species)) + geom_smooth(method = "lm")
+
+base_grafico + geom_point(aes(color=Species)) + geom_smooth(aes(color=Species),method = "lm")
 
 
+iris
+
+## # 12) Exportar dados ####
+
+## Para se exportar dados no R, utiliza-se a família de funções write,
+## como write.table, para o formato .txt e write.csv para o formato .csv;
+##
+## O modelo utilizado e:
+## write.csv2(nome do objeto a exportar, "nome do arquivo.csv").
+##
+## Semelhante a família das funções read, utiliza-se write.csv2
+## para arquivos com separador ";" e dec "," (padrão nacional/europeu);
+## e write.csv para arquivos com separador "," e dec "." (padrão americano).
+##
+## Deve-se atentar a extensão do arquivo no nome:
+write.csv2(iris, "iris.csv") 
+
+## Por padrão os nomes das linhas são inseridas no arquivo. Para que isto não aconteça,
+## utiliza-se row.names = FALSE:
+write.csv2(dados, "iris.csv", row.names = FALSE)
 
