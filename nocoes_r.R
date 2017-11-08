@@ -97,6 +97,8 @@
 ## Operadores são semelhantes a funções, e nos permitem fazer as operações
 ## mais básicas no R. Podem ser divididos entre operadores matemáticos e lógicos:
 ##
+## utilize # para criar comentários
+##
 ## Operadores matemáticos:
 ##
 ## "+"    soma;
@@ -220,7 +222,7 @@ y <- c(1,2,3,4,5,6,7,8)
 z <- seq(from = 1, to = 8, by = 1)
 z <- 1:8
 
-## R e sensível a maiúsculas e minúsculas (Case sensitive). então y e diferente de Y:
+## R e sensível a maiúsculas e minúsculas (Case sensitive). então y é diferente de Y:
 y
 #Y
 
@@ -253,7 +255,7 @@ x = 10
 ##
 ## Pode-se verificar isto com a função class():
 x <- 3
-
+x
 class(x)
 
 ## pode-se verificar se x realmente e numeric com a função is.numeric()
@@ -264,18 +266,8 @@ is.numeric(x)
 ## para se criar um objeto de classe integer, utiliza-se as.integer(),
 ## já que porpadrão o R cria objetos numéricos de classe numeric:
 x <- as.integer(3)
-as.integer(3)
 x
 class(x)
-
-## Ao se utilizar a função as.integer em um valor decimal, ele se torna inteiro:
-x <- as.integer(3.6)
-x
-
-## Pode-se também converter valores lógicos (TRUE ou FALSE) em números inteiros
-## assim como em outras linguagens, TRUE possui valor 1, e FALSE possui valor 0:
-as.integer(TRUE)
-as.integer(FALSE)
 
 ## ## 4.3) Logical (lógicos) ####
 
@@ -316,7 +308,9 @@ class(x > y)
 ## letras ou números entre aspas, "":
 
 x <- "3.14" 
+x
 y <- "programacão" 
+y
 ## Classes dos objetos x e y:
 class(x) 
 class(y)
@@ -477,26 +471,16 @@ dim(meusdados)
 
 ## Os nomes das variáveis de um df podem ser alterados:
 names(meusdados) <- c("Idade", "ID", "Teste") 
-
-## Verifica-se os nomes das variáveis:
-names(meusdados)
+meusdados
 
 ## Pode-se visualizá-lo como uma tabela, clicando nele na aba environment, ou utilizando View:
 # View(meusdados)
-
-## Elementos de um df podem ser chamados por nome, com $, ou por posição, com []:
-##
-## variável Idade:
-meusdados$Idade 
-
-## terceira coluna do df meusdados:
-meusdados[,3] 
 
 ## o R possui dataframes built-in, ou seja, que já vem instalados com o a instalação básica:
 head(mtcars)
 head(iris)
 
-## mais detalhes sobre a manipulação de data frames serãoabordadosem tópicos futuros. 
+## mais detalhes sobre a manipulação de data frames serão abordados em tópicos futuros. 
 ##
 
 ## ## 5.4) Lists (Listas) ####
